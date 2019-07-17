@@ -1,73 +1,90 @@
 import React, { useState } from "react";
-import UserTable from "./tables/UserTable";
-import AddUserForm from "./AddUserForm";
-import EditUserForm from "./EditUserForm";
+import MolduTable from "./tables/MolduTable";
+import AddMolduForm from "./forms/AddMolduForm";
+import EditMolduForm from "./forms/EditMolduForm";
 
 const App = () => {
-  const usersData = [
-    { id: 1, name: "Tania", username: "floppydiskette" },
-    { id: 2, name: "Craig", username: "siliconeidolon" },
-    { id: 3, name: "Ben", username: "benisphere" }
+  const molduData = [
+    { id: 1, text: "Het leven is prachtig!", author: "Frans", priority: 1 },
+    { id: 2, text: "Deepwork is belangrijk", author: "Mistro", priority: 2 },
+    {
+      id: 3,
+      text: "Leef met het einde voor ogen",
+      author: "Benjogu",
+      priority: 3
+    }
   ];
 
-  const [users, setUsers] = useState(usersData); // Create a new state variable: users with a corresponding setUsers method, to set it's state
+  const [moldus, setMoldus] = useState(molduData); // Create a new state variable: moldus with a corresponding setMoldus method, to set it's state
 
   const [editing, setEditing] = useState(false);
 
-  // Creeer een nieuwe state variabele: currentUser en vul deze initieel met een leeg user object
-  const initialFormState = { id: null, name: "", username: "" };
-  const [currentUser, setCurrentUser] = useState(initialFormState);
+  // Creeer een nieuwe state variabele: currentMoldu en vul deze initieel met een leeg moldu object
+  const initialFormState = { id: null, text: "", author: "", priority: 3 };
+  const [currentMoldu, setCurrentMoldu] = useState(initialFormState);
 
-  const addUser = user => {
-    user.id = users.length + 1;
-    setUsers([...users, user]); //Voegt een user toe aan het einde van de lijst
+  const addMoldu = moldu => {
+    moldu.id = moldus.length + 1;
+    setMoldus([...moldus, moldu]); //Voegt een moldu toe aan het einde van de lijst
   };
 
-  // Take the id and filter that user out of the list en set the new state
-  const deleteUser = id => {
+  // Take the id and filter that moldu out of the list en set the new state
+  const deleteMoldu = id => {
     setEditing(false);
-    setUsers(users.filter(user => user.id !== id));
+    setMoldus(moldus.filter(moldu => moldu.id !== id));
   };
 
-  const editRow = user => {
+  const editRow = moldu => {
     setEditing(true);
-    // Door setCurrentUser wordt de state geset en wordt er opnieuw gerenderd en dus de edit mode getoond!
-    setCurrentUser({ id: user.id, name: user.name, username: user.username });
+    // Door setCurrentMoldu wordt de state geset en wordt er opnieuw gerenderd en dus de edit mode getoond!
+    setCurrentMoldu({
+      id: moldu.id,
+      text: moldu.text,
+      author: moldu.author,
+      priority: moldu.priority
+    });
   };
 
-  const updateUser = (id, updatedUser) => {
+  const updateMoldu = (id, updateMoldu) => {
     setEditing(false);
-    setUsers(users.map(user => (user.id === id ? updatedUser : user)));
+    setMoldus(moldus.map(moldu => (moldu.id === id ? updateMoldu : moldu)));
   };
 
   return (
     <div className="container">
       {/* Dit is Javascript comment, omdat dit JSX is */}
-      <h1>CRUD App with Hooks</h1>
+      <div className="jumbotron">
+        <h1>MoldU</h1>
+        <p>Be reminded of those valuable life lessons!</p>
+      </div>
       <div className="flex-row">
         {/* Afhankelijk van de waarde van de editing state variabele, laat je het edit or add form zien*/}
         <div className="flex-large">
           {editing ? (
             <div>
-              <h2>Edit user</h2>
-              <EditUserForm
+              <h2>Edit mold</h2>
+              <EditMolduForm
                 editing={editing}
-                setEditing={setEditing} //Dit is de functie voor het setten van de state variabele editing. En deze wordt gebruikt door de cancel button van de EditUserForm.js
-                currentUser={currentUser} //Dit zijn de gegevens van de huidige user
-                updateUser={updateUser} //Deze funtie wordt door EditUserForm component aangeroepen als er op de submit knop wordt gedrukt
+                setEditing={setEditing} //Dit is de functie voor het setten van de state variabele editing. En deze wordt gebruikt door de cancel button van de EditMolduForm.js
+                currentMoldu={currentMoldu} //Dit zijn de gegevens van de huidige moldu
+                updateMoldu={updateMoldu} //Deze funtie wordt door EditMolduForm component aangeroepen als er op de submit knop wordt gedrukt
               />
             </div>
           ) : (
             <div>
-              <h2>Add user</h2>
-              {/* Je geeft o.a. de addUser en deleteUser methods mee via de properties van het AddUserForm component, zodat deze de methods weer kan aanroepen! */}
-              <AddUserForm addUser={addUser} />
+              <h2>Add mold</h2>
+              {/* Je geeft o.a. de addMoldu en deleteMoldu methods mee via de properties van het AddMolduForm component, zodat deze de methods weer kan aanroepen! */}
+              <AddMolduForm addMoldu={addMoldu} />
             </div>
           )}
         </div>
-        <div className="flex-large">
-          <h2>View users</h2>
-          <UserTable users={users} editRow={editRow} deleteUser={deleteUser} />
+        <div className="flex-large mt-5">
+          <h2>View molds</h2>
+          <MolduTable
+            moldus={moldus}
+            editRow={editRow}
+            deleteMoldu={deleteMoldu}
+          />
         </div>
       </div>
     </div>
