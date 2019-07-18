@@ -40,6 +40,17 @@ const EditMolduForm = props => {
         value={moldu.author}
         onChange={handleInputChange}
       />
+      <label>Priority</label>
+      <select
+        className="form-control"
+        name="priority"
+        onChange={handleInputChange}
+        value={moldu.priority}
+      >
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
       <div className="btn-group mt-2">
         <button className="btn btn-info">Update</button>
         <button

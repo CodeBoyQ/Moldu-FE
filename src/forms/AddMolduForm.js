@@ -43,6 +43,17 @@ const AddUserForm = props => {
         value={moldu.author} // De waarde wordt initieel geset, met de waarde van author property van de Component state variabele moldu
         onChange={handleInputChange} // Bij elke wijziging van dit veld, wordt de onChange aangeroepen
       />
+      <label>Priority</label>
+      <select
+        className="form-control"
+        name="priority"
+        onChange={handleInputChange}
+        value={moldu.priority}
+      >
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
       <button className="btn btn-info mt-3">Add</button>
     </form>
   );
