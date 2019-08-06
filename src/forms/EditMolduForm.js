@@ -10,8 +10,8 @@ const EditMolduForm = props => {
     setMoldu({ ...moldu, [name]: value });
   };
 
-  // Update the props. Begrijp ik nog niet helemaal, maar is nodig
-  // zodat je op edit van een andere moldu kan klikken als er reeds een
+  // useEffect wordt na elke render aangeroepen, mits props is gewijzigd. Zorgenaamde Hook
+  // is nodig zodat je op edit van een andere moldu kan klikken als er reeds een
   // moldu geedit wordt
   useEffect(() => {
     setMoldu(props.currentMoldu);
