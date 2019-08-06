@@ -6,21 +6,29 @@ import axios from "axios";
 
 const local = "http://localhost:9000";
 const remote = "https://moldu.herokuapp.com";
-const API_URL = local + "/moldu/v1";
+const API_URL = remote + "/moldu/v1";
 
 const App = () => {
   const [moldus, setMoldus] = useState([]); // Create a new state variable: moldus (die alle moldussen bevat) with a corresponding setMoldus method, to set it's state
   const [editing, setEditing] = useState(false); // False is de initiele waarde van de state variabele
-
-  //const [data, setData] = useState([]); // Creeert een nieuwe state-variabele met een initieel lege waarde
 
   // Creeer een nieuwe state variabele: currentMoldu en vul deze initieel met een leeg moldu object
   const initialFormState = { id: null, text: "", author: "", priority: 3 };
   const [currentMoldu, setCurrentMoldu] = useState(initialFormState);
 
   const addMoldu = moldu => {
-    moldu.id = moldus.length + 1;
-    setMoldus([...moldus, moldu]); //Voegt een moldu toe aan het einde van de lijst
+    // Roep de REST-API aan om een moldu toe te voegen
+    axios
+      .post(`${API_URL}/moldus`, moldu)
+      .then(function(response) {
+        // Haal de id op van de toegevoegde moldu en update de lokale lijst
+        moldu.id = response.data.id; // Id van het toegevoegde moldu object
+        setMoldus([...moldus, moldu]); // Voeg de moldu toe aan het einde van de lijst (lokaal)
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   // Take the id and filter that moldu out of the list en set the new state
