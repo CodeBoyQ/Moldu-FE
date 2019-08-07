@@ -41,7 +41,7 @@ const MolduTable = props => (
         ))
       ) : (
         <tr>
-          <td colSpan={4}>No moldus</td>
+          <td colSpan={4}>{props.loadingStatus}</td>
         </tr>
       )}
     </tbody>

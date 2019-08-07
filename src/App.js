@@ -15,6 +15,7 @@ const App = () => {
   // Creeer een nieuwe state variabele: currentMoldu en vul deze initieel met een leeg moldu object
   const initialFormState = { id: null, text: "", author: "", priority: 3 };
   const [currentMoldu, setCurrentMoldu] = useState(initialFormState);
+  const [loadingStatus, setLoadingStatus] = useState("Loading...");
 
   // Functie voor het toevoegen van een moldu
   const addMoldu = moldu => {
@@ -82,9 +83,11 @@ const App = () => {
       .get(`${API_URL}/moldus`)
       .then(result => {
         setMoldus(result.data);
+        setLoadingStatus("No Moldus"); //This will appear if the list is empty after loading
         console.log(result);
       })
       .catch(error => {
+        setLoadingStatus("There was a problem. " + error);
         console.log(error);
       });
   }, []);
@@ -124,6 +127,7 @@ const App = () => {
             moldus={moldus}
             editRow={editRow}
             deleteMoldu={deleteMoldu}
+            loadingStatus={loadingStatus}
           />
         </div>
       </div>
