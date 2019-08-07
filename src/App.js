@@ -16,6 +16,7 @@ const App = () => {
   const initialFormState = { id: null, text: "", author: "", priority: 3 };
   const [currentMoldu, setCurrentMoldu] = useState(initialFormState);
 
+  // Functie voor het toevoegen van een moldu
   const addMoldu = moldu => {
     // Roep de REST-API aan om een moldu toe te voegen
     axios
@@ -31,14 +32,25 @@ const App = () => {
       });
   };
 
-  // Take the id and filter that moldu out of the list en set the new state
   const deleteMoldu = id => {
-    setEditing(false);
-    setMoldus(moldus.filter(moldu => moldu.id !== id));
+    setEditing(false); // Zorgt er voor dat bij rendering het Add formulier (ipv Edit formulier wordt getoond)
+
+    axios
+      .delete(`${API_URL}/moldus/${id}`)
+      .then(function(response) {
+        // Take the id and filter that moldu out of the lokal list en set the new state
+        setMoldus(moldus.filter(moldu => moldu.id !== id));
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
+  // Functie die de geselecteerde row toont in het edit scherm
   const editRow = moldu => {
-    setEditing(true);
+    setEditing(true); // Toon het Edit formulier (dit gebeurd na rendering)
+
     // Door setCurrentMoldu wordt de state geset en wordt er opnieuw gerenderd en dus de edit mode getoond!
     setCurrentMoldu({
       id: moldu.id,
@@ -48,9 +60,20 @@ const App = () => {
     });
   };
 
+  // Functie voor het updaten van een moldu
   const updateMoldu = (id, updateMoldu) => {
     setEditing(false);
-    setMoldus(moldus.map(moldu => (moldu.id === id ? updateMoldu : moldu)));
+
+    axios
+      .put(`${API_URL}/moldus`, updateMoldu)
+      .then(function(response) {
+        // Update de Moldu in de lokale lijst (DOM)
+        setMoldus(moldus.map(moldu => (moldu.id === id ? updateMoldu : moldu)));
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   // Onetime read the Moldus from the Back-end and Initialise the moldus state variabel (that holds all hte moldus)
