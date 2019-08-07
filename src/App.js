@@ -16,6 +16,7 @@ const App = () => {
   const initialFormState = { id: null, text: "", author: "", priority: 3 };
   const [currentMoldu, setCurrentMoldu] = useState(initialFormState);
   const [loadingStatus, setLoadingStatus] = useState("Loading...");
+  const [randomMoldu, setRandomMoldu] = useState([]);
 
   // Functie voor het toevoegen van een moldu
   const addMoldu = moldu => {
@@ -78,7 +79,9 @@ const App = () => {
   };
 
   // Onetime read the Moldus from the Back-end and Initialise the moldus state variabel (that holds all hte moldus)
+  // Also load a random Moldu
   useEffect(() => {
+    // Load all the Moldu's
     axios
       .get(`${API_URL}/moldus`)
       .then(result => {
@@ -90,6 +93,17 @@ const App = () => {
         setLoadingStatus("There was a problem. " + error);
         console.log(error);
       });
+
+    // Load a Random Moldu to show
+    axios
+      .get(`${API_URL}/moldus/random`)
+      .then(function(response) {
+        setRandomMoldu(response.data[0]);
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log("Random Moldu could not be loaded. " + error);
+      });
   }, []);
 
   return (
@@ -98,7 +112,15 @@ const App = () => {
 
       <div className="jumbotron">
         <h1>MoldU</h1>
-        <p>Be reminded of those valuable life lessons!</p>
+        <p className="text-secondary">
+          Be reminded of those valuable life lessons!
+        </p>
+        <blockquote>
+          <h4 className="font-italic">{randomMoldu.text}</h4>
+          <footer className="small">
+            {randomMoldu.author} [{randomMoldu.priority}]
+          </footer>
+        </blockquote>
       </div>
       <div className="flex-row">
         {/* Afhankelijk van de waarde van de editing state variabele, laat je het edit or add form zien*/}
