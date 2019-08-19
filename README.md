@@ -2,35 +2,25 @@
 
 ## Stack
 
-React
-Hosted on Netlify
+- React JS
+- Hosted on Netlify
 
 ## Local
 
-### Start
+Url : http://localhost:3000/
 
-npm start
+Start: npm start
 
-### Stop
+Stop: Ctrl + c
 
-Ctrl + c
-
-### Deploy
-
-N.v.t.
-
-### Url
-
-http://localhost:3000/
+Deploy: -
 
 ## Remote
 
-### Deploy
+Staging Url : https://5d5ab53c5ee418162013cbd8--moldufe.netlify.com
 
-git push heroku master
+Production Url: https://moldufe.netlify.com
 
-heroku open
+Deploy staging: netlify deploy
 
-### Url
-
-https://moldu.herokuapp.com/moldu/v1/moldus
+Deploy production: netlify deploy --prod
