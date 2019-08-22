@@ -7,7 +7,7 @@
 
 ## Local
 
-Url : http://localhost:3000/
+Url : http://localhost:3000
 
 Start: npm start
 

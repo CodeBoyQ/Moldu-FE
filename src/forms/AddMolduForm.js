@@ -3,7 +3,7 @@ import React, { useState } from "react"; // We import the useState Hook from Rea
 // Dit is het Component, maar er wordt een function gebruikt ipv een Component
 // Indien je geen Lifecycles etc. gebruikt is een function (const) goedkoper dan een Component
 const AddUserForm = props => {
-  //props bevat alle mee gegeven properties. In dit geval de addMoldu property, die in de App.js wordt mee gegeven
+  //props bevat alle mee gegeven properties. In dit geval de addMoldu functie, die in de App.js wordt mee gegeven
   const initialFormState = { id: null, text: "", author: "", priority: 3 }; // Dit is gewoon een constante, die wordt geset met een Javascript object {..}
   // Inside the AddUserForm component, we declare a new state variable by calling the useState Hook. It returns a pair of values, to which we give names. We’re calling our variable moldu. We initialize it with an object als the only useState argument. The second returned item is itself a function. It lets us update the moldu so we’ll name it setMoldu.
   const [moldu, setMoldu] = useState(initialFormState); // Er wordt dus een nieuwe state Variabele moldu aangemaakt, die wordt geinitialiseerd met initialstate object en kun worden geset door de molduState method aan te roepen
@@ -21,7 +21,7 @@ const AddUserForm = props => {
       // onSubmit is de functie die wordt aangeroepen als de submit button wordt geklikt
       onSubmit={event => {
         event.preventDefault(); // De standaard event wordt niet uitgevoerd, omdat we zelf in control willen zijn
-        if (!moldu.text || !moldu.author) return; // Als een van deze twee leeg is, dan wordt er niks gedaan
+        if (!moldu.text) return; // Als de tekst leeg is, dan wordt er niks gedaan
 
         props.addMoldu(moldu); // Roep de addMoldu method aan die je via App.js als property hebt mee gekregen!
         setMoldu(initialFormState);
