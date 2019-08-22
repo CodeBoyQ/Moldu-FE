@@ -26,14 +26,14 @@ const MolduTable = props => (
                   }}
                   className="btn btn-info"
                 >
-                  <span className="glyphicon glyphicon-trash" /> Edit
+                  <i className="far fa-edit" />
                 </button>
                 <button
                   type="button"
                   onClick={() => props.deleteMoldu(moldu.id)}
                   className="btn btn-info"
                 >
-                  Delete
+                  <i className="far fa-trash-alt" />
                 </button>
               </div>
             </td>
