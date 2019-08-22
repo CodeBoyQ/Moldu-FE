@@ -21,6 +21,12 @@ Staging Url : https://5d5ab53c5ee418162013cbd8--moldufe.netlify.com
 
 Production Url: https://moldufe.netlify.com
 
-Deploy staging: netlify deploy
+Deploy staging:
+npm run build
+netlify deploy
+(deploy path: build)
 
-Deploy production: netlify deploy --prod
+Deploy production:
+npm run build
+netlify deploy --prod
+(deploy path: build)
